@@ -28,7 +28,7 @@ type NBAGameData struct {
 	HomeTeam   Team      `json:"homeTeam"`
 	AwayTeam   Team      `json:"awayTeam"`
 	GameStatus int       `json:"gameStatus"`
-	GameTime   time.Time `json:"gameDateTimeEst"`
+	GameTime   time.Time `json:"gameDateTimeUTC"`
 	WeekName   string    `json:"weekName"`
 	ArenaName  string    `json:"arenaName"`
 	ArenaState string    `json:"arenaState"`

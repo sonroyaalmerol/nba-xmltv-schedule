@@ -52,11 +52,36 @@ func ConvertToXMLTV(schedule []nba.NBAGameData, iconBaseURL string) TV {
 			},
 		}
 
+		awayProgram := Program{
+			Start:   game.GameTime.Format("20060102150405 -0700"),
+			Stop:    game.GameTime.Add(2 * time.Hour).Format("20060102150405 -0700"), // Assuming each game lasts 2 hours
+			Channel: getChannelID(fullAwayTeamName),
+			Categories: []Category{
+				{
+					Lang: "en",
+					Text: "Sports",
+				},
+			},
+			Desc: fmt.Sprintf("%s - %s, %s, %s", game.WeekName, game.ArenaName, game.ArenaCity, game.ArenaState),
+			Title: Title{
+				Text: fmt.Sprintf("%s vs %s", fullTeamName, fullAwayTeamName),
+				Lang: "en",
+			},
+			Date: game.GameTime.Format("20060102"),
+			Audio: Audio{
+				Stereo: "stereo",
+			},
+			Subtitles: Subtitles{
+				Type: "teletext",
+			},
+		}
+
 		if getChannelID(fullTeamName) == "" {
 			continue
 		}
 
 		tv.Programs = append(tv.Programs, program)
+		tv.Programs = append(tv.Programs, awayProgram)
 	}
 
 	tv.SourceInfoName = "NBA XMLTV"
